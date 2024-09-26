@@ -1,0 +1,13 @@
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring 
+metadata:
+  name: prom-example
+spec:
+  selector:
+    matchLabels:
+      app: space-invaders 
+  endpoints:
+  - port: metrics
+    interval: 30s 
+
+

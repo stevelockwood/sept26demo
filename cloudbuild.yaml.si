@@ -1,0 +1,12 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=us-docker.pkg.dev/$PROJECT_ID/spaceinvaders/space-invaders-img:$TAG_NAME', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-docker.pkg.dev/$PROJECT_ID/spaceinvaders/space-invaders-img:$TAG_NAME']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['set', 'image', 'deployment/space-invaders', 'space-invaders=us-docker.pkg.dev/$PROJECT_ID/spaceinvaders/space-invaders-img:$TAG_NAME']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+options:
+  logging: CLOUD_LOGGING_ONLY
